@@ -64,21 +64,27 @@ namespace AnalogWatch
 
         private void Form1_SetBorderFixed(object sender, EventArgs e)
         {
-            if (FormBorderStyle != FormBorderStyle.FixedDialog)
-                FormBorderStyle = FormBorderStyle.FixedDialog;
+            Height = 500;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            label1.Visible = true;
+            VisibilityTB.Visible = true;
+            AllwaysOnTopCB.Visible = true;
             SecondsTimer_Tick(sender, e);
         }
 
         private void Form1_SetBorderNone(object sender, EventArgs e)
         {
-            if (FormBorderStyle != FormBorderStyle.None)
-                FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.None;
+            VisibilityTB.Visible = false;
+            label1.Visible = false;
+            AllwaysOnTopCB.Visible = false;
+            Height = 450;
             SecondsTimer_Tick(sender, e);
         }
 
         private void VisibilityTB_ValueChanged(object sender, EventArgs e)
         {
-            System.Windows.Forms.Form.ActiveForm.Opacity = ((double)(VisibilityTB.Value) / 100.0);
+            ActiveForm.Opacity = ((double)(VisibilityTB.Value) / 100.0);
         }
 
         private void AllwaysOnTopCB_CheckedChanged(object sender, EventArgs e)

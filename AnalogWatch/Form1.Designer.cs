@@ -48,7 +48,7 @@
             // DigitalWatch
             // 
             this.DigitalWatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.DigitalWatch.Location = new System.Drawing.Point(12, 411);
+            this.DigitalWatch.Location = new System.Drawing.Point(148, 415);
             this.DigitalWatch.Name = "DigitalWatch";
             this.DigitalWatch.Size = new System.Drawing.Size(130, 30);
             this.DigitalWatch.TabIndex = 1;
@@ -67,39 +67,43 @@
             // 
             // VisibilityTB
             // 
-            this.VisibilityTB.Location = new System.Drawing.Point(145, 403);
+            this.VisibilityTB.Location = new System.Drawing.Point(12, 448);
             this.VisibilityTB.Maximum = 100;
             this.VisibilityTB.Minimum = 1;
             this.VisibilityTB.Name = "VisibilityTB";
             this.VisibilityTB.Size = new System.Drawing.Size(130, 45);
             this.VisibilityTB.TabIndex = 2;
             this.VisibilityTB.Value = 100;
+            this.VisibilityTB.Visible = false;
             this.VisibilityTB.ValueChanged += new System.EventHandler(this.VisibilityTB_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(180, 435);
+            this.label1.Location = new System.Drawing.Point(39, 480);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Průhlednost";
+            this.label1.Visible = false;
             // 
             // AllwaysOnTopCB
             // 
             this.AllwaysOnTopCB.AutoSize = true;
-            this.AllwaysOnTopCB.Location = new System.Drawing.Point(290, 415);
+            this.AllwaysOnTopCB.Location = new System.Drawing.Point(294, 465);
             this.AllwaysOnTopCB.Name = "AllwaysOnTopCB";
             this.AllwaysOnTopCB.Size = new System.Drawing.Size(94, 17);
             this.AllwaysOnTopCB.TabIndex = 4;
             this.AllwaysOnTopCB.Text = "Vždy na vrchu";
             this.AllwaysOnTopCB.UseVisualStyleBackColor = true;
+            this.AllwaysOnTopCB.Visible = false;
             this.AllwaysOnTopCB.CheckedChanged += new System.EventHandler(this.AllwaysOnTopCB_CheckedChanged);
             // 
             // Watch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
             this.ClientSize = new System.Drawing.Size(400, 450);
             this.Controls.Add(this.AllwaysOnTopCB);
