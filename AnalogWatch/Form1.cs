@@ -1,82 +1,89 @@
 ﻿using System;
 using System.Drawing;
-using System.Timers;
 using System.Windows.Forms;
 
 namespace AnalogWatch
 {
-    public partial class Form1 : Form
+    public partial class Watch : Form
     {
-        Pen _secondsPen = new Pen(Color.Red);
-        Pen _minutePen = new Pen(Color.Gray);
-        Pen _hourPen = new Pen(Color.Black);
+        readonly Pen _secondsPen = new Pen(Color.Red);
+        readonly Pen _minutePen = new Pen(Color.Gray);
+        readonly Pen _hourPen = new Pen(Color.Black);
+        readonly Image _clockImg;
         readonly Point _middlePB;
-        Graphics g;
-        public Form1()
+        readonly Graphics _g;
+        public Watch()
         {
             InitializeComponent();
-            g = WatchPB.CreateGraphics();
+            _clockImg = Properties.Resources.ClockImg;
+            DoubleBuffered = true;
+            DigitalWatch.Text = DateTime.Now.ToString("h:m:ss");
+            _g = WatchPB.CreateGraphics();
             _middlePB = new Point(WatchPB.Width/2, WatchPB.Height/2);
             SecondsTimer.Start();
         }
 
         private void SecondsTimer_Tick(object sender, EventArgs e)
         {
-
-            g = WatchPB.CreateGraphics();
-            g.Clear(Color.White);
             DrawWatch();
             var now = DateTime.Now;
-            label1.Text = now.ToString();
+            DigitalWatch.Text = now.ToString("h:m:ss");
             MoveSecondsHand(now.Second);
             MoveMinuteHand(now.Minute);
             MoveHourHand(now.Hour);
+            _g.FillEllipse(Brushes.Black, _middlePB.X - 5, _middlePB.Y - 5, 10, 10);
         }
 
         private void MoveSecondsHand(int seconds)
         {
-            g.TranslateTransform(_middlePB.X, _middlePB.Y);
-            g.RotateTransform(6 * seconds);
-            g.DrawLine(_secondsPen, 0, 0, 0, -160);
-            g.ResetTransform();
+            _g.TranslateTransform(_middlePB.X, _middlePB.Y);
+            _g.RotateTransform(6 * seconds);
+            _g.DrawLine(_secondsPen, 0, 0, 0, -160);
+            _g.ResetTransform();
         }
 
         private void MoveMinuteHand(int minutes)
         {
-            g.TranslateTransform(_middlePB.X, _middlePB.Y);
-            g.RotateTransform(6 * minutes);
-            g.DrawLine(_minutePen, 0, 0, 0, -125);
-            g.ResetTransform();
+            _g.TranslateTransform(_middlePB.X, _middlePB.Y);
+            _g.RotateTransform(6 * minutes/60);
+            _g.DrawLine(_minutePen, 0, 0, 0, -125);
+            _g.ResetTransform();
         }
 
         private void MoveHourHand(int hours)
         {
-            g.TranslateTransform(_middlePB.X, _middlePB.Y);
-            g.RotateTransform(6 * hours);
-            g.DrawLine(_hourPen, 0, 0, 0, -90);
-            g.ResetTransform();
+            _g.TranslateTransform(_middlePB.X, _middlePB.Y);
+            _g.RotateTransform(6 * hours);
+            _g.DrawLine(_hourPen, 0, 0, 0, -90);
+            _g.ResetTransform();
         }
         private void DrawWatch()
         {
-            g.DrawEllipse(_hourPen, 0, 0, WatchPB.Width, WatchPB.Height);
+            _g.DrawImage(_clockImg, 0, 0, WatchPB.Width, WatchPB.Height);
         }
 
-        private void Form1_Click(object sender, EventArgs e)
+        private void Form1_SetBorderFixed(object sender, EventArgs e)
         {
-            if (ActiveForm == null)
-                return;
-            if(ActiveForm.FormBorderStyle != FormBorderStyle.FixedDialog && ActiveForm.ContainsFocus)
-                ActiveForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+            if (FormBorderStyle != FormBorderStyle.FixedDialog)
+                FormBorderStyle = FormBorderStyle.FixedDialog;
             SecondsTimer_Tick(sender, e);
         }
 
-        private void Form1_SetNoneHandle(object sender, EventArgs e)
+        private void Form1_SetBorderNone(object sender, EventArgs e)
         {
-            if (ActiveForm == null)
-                return;
-            if (ActiveForm.FormBorderStyle != FormBorderStyle.None && ActiveForm.ContainsFocus)
-                ActiveForm.FormBorderStyle = FormBorderStyle.None;
+            if (FormBorderStyle != FormBorderStyle.None)
+                FormBorderStyle = FormBorderStyle.None;
             SecondsTimer_Tick(sender, e);
+        }
+
+        private void VisibilityTB_ValueChanged(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Form.ActiveForm.Opacity = ((double)(VisibilityTB.Value) / 100.0);
+        }
+
+        private void AllwaysOnTopCB_CheckedChanged(object sender, EventArgs e)
+        {
+            TopMost = AllwaysOnTopCB.Checked;
         }
     }
 }
